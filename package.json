@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "Javascript Development Environment for the BCA Development Centre",
   "scripts": {
-    "prestart": "node buildScripts/startMessage",
-    "start": "node buildScripts/srcServer.js"
+    "prestart": "babel-node buildScripts/startMessage",
+    "start": "npm-run-all --parallel security-check open:src",
+    "open:src": "babel-node buildScripts/srcServer.js",
+    "security-check": "nsp check",
+    "localtunnel": "lt --port 1300 --subdomain xpaweb",
+    "share": "npm-run-all --parallel open:src localtunnel"
   },
   "author": "Brent Craig Adonis",
   "license": "BCA",
