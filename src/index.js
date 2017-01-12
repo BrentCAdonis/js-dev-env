@@ -1,6 +1,19 @@
-import './index.css';
+import {getXcedeLedgers} from './api/xcedeLedgerApi';
 
-import numeral from 'numeral';
+// Populate table of Reckon APS Xcede Ledgers via API call.
+getXcedeLedgers().then(result => {
+  let ledgersBody = "";
 
-const courseValue = numeral(1000).format('$0,0.00');
-console.log('I would pay ${courseValue} for this awesome course!');
+  result.forEach(ledger => {
+    ledgersBody+=
+      `<tr>
+        <td><a href="#" data-id="${ledger.id}"></a></td>
+        <td>${ledger.id}</td>
+        <td>${ledger.name}</td>
+        <td>${ledger.date}</td>
+        <td>${ledger.contact}</td>
+      </tr>`
+  });
+
+  global.document.getElementById('xcedeledgers').innerHTML = ledgersBody;
+});
